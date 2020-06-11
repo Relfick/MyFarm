@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.polytech.controller.FarmFieldsController">
+    <children>
+        <GridPane fx:id="plantField" gridLinesVisible="true" layoutX="26.0" layoutY="166.0" pickOnBounds="false" prefHeight="196.0" prefWidth="272.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
+                <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
+            </children>
+        </GridPane>
+        <ImageView fx:id="avatarImage" fitHeight="90.0" fitWidth="91.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+        <Label fx:id="balanceLabel" layoutX="186.0" layoutY="32.0" prefHeight="25.0" prefWidth="68.0" text="Label">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="113.0" layoutY="32.0" prefHeight="25.0" prefWidth="60.0" text="Баланс:">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Button fx:id="storageButton" layoutX="622.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleOpenStorage" prefHeight="36.0" prefWidth="91.0" text="Склад" />
+        <Button fx:id="shopButton" layoutX="622.0" layoutY="104.0" mnemonicParsing="false" onAction="#handleOpenShop" prefHeight="46.0" prefWidth="91.0" text="Магазин" />
+        <Button fx:id="stopPlantingButton" layoutX="620.0" layoutY="399.0" mnemonicParsing="false" onAction="#handleStopPlanting" prefHeight="36.0" prefWidth="91.0" text="Стоп" visible="false" />
+        <Label fx:id="seedsLeftLabel" layoutX="400.0" layoutY="371.0" prefHeight="25.0" prefWidth="121.0" visible="false" />
+    </children>
+</AnchorPane>
