@@ -12,7 +12,10 @@ import java.util.HashMap;
 public class Player {
     private int balance;
 
+    /** первая пара - координаты посаженного семени
+     * value второй пары указывает, выросло ли растение*/
     private HashMap<Pair<Integer, Integer>, Pair<SeedType, Boolean>> plantedSeeds = new HashMap<>();
+
     private ObservableList<SeedType> seedsInStorage = FXCollections.observableArrayList();
     private ObservableList<PlantType> plantsInStorage = FXCollections.observableArrayList();
 

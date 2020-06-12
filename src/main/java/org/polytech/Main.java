@@ -39,7 +39,7 @@ public class Main extends Application {
     public static void main(String[] args) { launch(args); }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("My Farm");
 
@@ -48,7 +48,6 @@ public class Main extends Application {
 
     public void showFarmFields() {
         try {
-            System.out.println("выдал " + getClass().getResource("/view/FarmFields.fxml"));
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FarmFields.fxml"));
             farmField = loader.load();
 
