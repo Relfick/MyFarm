@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import org.polytech.controller.FarmFieldsController;
 import org.polytech.controller.ShopWindowController;
 import org.polytech.controller.StorageWindowController;
+import org.polytech.model.Field;
 import org.polytech.model.PlantType;
 import org.polytech.model.Player;
 import org.polytech.model.SeedType;
@@ -23,15 +24,16 @@ public class Main extends Application {
     private AnchorPane farmField;
 
     private Player player = new Player(500);
+    private Field field = new Field();
     private SeedType currSeedType;
 
     private ObservableList<SeedType> allAvailableSeeds = FXCollections.observableArrayList();
 
     public Main() {
-        player.addVegetable(SeedType.APPLE, 2);
-        player.addVegetable(PlantType.STRAWBERRY, 2);
-        player.addVegetable(SeedType.WHEAT, 1);
-        player.addVegetable(SeedType.STRAWBERRY, 4);
+        field.addVegetable(SeedType.APPLE, 2);
+        field.addVegetable(PlantType.STRAWBERRY, 2);
+        field.addVegetable(SeedType.WHEAT, 1);
+        field.addVegetable(SeedType.STRAWBERRY, 4);
 
         allAvailableSeeds.addAll(Arrays.asList(SeedType.values()));
     }
@@ -41,14 +43,14 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("My Farm");
+        this.primaryStage.setTitle("Моя ферма");
 
         showFarmFields();
     }
 
     public void showFarmFields() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FarmFields.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmls/FarmFields.fxml"));
             farmField = loader.load();
 
             FarmFieldsController controller = loader.getController();
@@ -65,7 +67,7 @@ public class Main extends Application {
 
     public boolean showStorage() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/StorageWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmls/StorageWindow.fxml"));
             AnchorPane storage = loader.load();    // Создаём диалоговое окно Stage.
             Stage storageStage = new Stage();
             storageStage.setTitle("Склад");
@@ -89,7 +91,7 @@ public class Main extends Application {
 
     public void showShop() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShopWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmls/ShopWindow.fxml"));
             AnchorPane storage = loader.load();    // Создаём диалоговое окно Stage.
             Stage shopStage = new Stage();
             shopStage.setTitle("Магазин");
@@ -120,11 +122,14 @@ public class Main extends Application {
     }
 
     public ObservableList<SeedType> getStorageSeeds() {
-        return player.getSeedsInStorage();
+        return field.getSeedsInStorage();
     }
 
-    public ObservableList<PlantType> getStoragePlants() { return player.getPlantsInStorage(); }
+    public ObservableList<PlantType> getStoragePlants() { return field.getPlantsInStorage(); }
 
     public ObservableList<SeedType> getAllAvailableSeeds() { return allAvailableSeeds; }
 
+    public Field getField() {
+        return field;
+    }
 }

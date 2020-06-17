@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import org.polytech.Main;
+import org.polytech.model.Field;
 import org.polytech.model.PlantType;
 import org.polytech.model.Player;
 import org.polytech.model.SeedType;
@@ -22,6 +23,7 @@ public class FarmFieldsController {
 
     private Main mainApp;
     private Player player;
+    private Field field;
     private SeedType currSeedType;
 
     private boolean isPlantingMode = false;
@@ -55,8 +57,8 @@ public class FarmFieldsController {
                 Pair<Integer, Integer> coords = new Pair<>(rowI, colI);
 
                 if (isPlantingMode) {
-                    if (!player.isAlreadyPlanted(coords)) {
-                        player.plantSeed(coords, currSeedType);
+                    if (!field.isAlreadyPlanted(coords)) {
+                        field.plantSeed(coords, currSeedType);
                         try {
                             this.plant(item, coords);
                         } catch (FileNotFoundException e) {
@@ -66,18 +68,18 @@ public class FarmFieldsController {
                 }
 
                 // Сбор созревшего растения, если в данной ячейке такое имеется
-                if (player.hasGrown(coords)) {
+                if (field.hasGrown(coords)) {
                     ((ImageView)item).setImage(null);
-                    SeedType harvest = player.getHarvest(coords);
+                    SeedType harvest = field.getHarvest(coords);
                     String harvestName = harvest.getName();
                     for (PlantType plant: PlantType.values()) {
                         if (plant.getName().equals(harvestName)) {
-                            player.addVegetable(plant, 1);
+                            field.addVegetable(plant, 1);
                             break;
                         }
                     }
 
-                    player.deleteGrownPlant(coords);
+                    field.deleteGrownPlant(coords);
                 }
             }
         }));
@@ -107,6 +109,7 @@ public class FarmFieldsController {
     public void setMainApp(Main MainApp) {
         this.mainApp = MainApp;
         player = mainApp.getPlayer();
+        field = mainApp.getField();
         balanceLabel.setText(Integer.toString(player.getBalance()));
         avatarImage.setImage(player.getAvatar());
     }
@@ -139,7 +142,7 @@ public class FarmFieldsController {
                     Thread.sleep(growTime);
                     img.setImage(new Image(
                             new FileInputStream(currSeed.getSeedImagePath(3))));
-                    player.setGrown(coords);
+                    field.setGrown(coords);
                 } catch (InterruptedException | FileNotFoundException e) {
                     e.printStackTrace();
                 } finally {
@@ -148,7 +151,7 @@ public class FarmFieldsController {
             }
         }, growTime);
 
-        if (player.getCountOfSeed(currSeed) == 0)
+        if (field.getCountOfSeed(currSeed) == 0)
             handleStopPlanting();
     }
 
@@ -158,7 +161,7 @@ public class FarmFieldsController {
         isPlantingMode = mode;
         if (mode) {
             stopPlantingButton.setVisible(true);
-            seedsLeftLabel.setText("Осталось " + player.getCountOfSeed(currSeedType));
+            seedsLeftLabel.setText("Осталось " + field.getCountOfSeed(currSeedType));
             seedsLeftLabel.setVisible(true);
         }
     }

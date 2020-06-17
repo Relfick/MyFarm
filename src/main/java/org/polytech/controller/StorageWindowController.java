@@ -43,14 +43,14 @@ public class StorageWindowController {
     @FXML
     private Label totalProfitLabel;
     @FXML
-    private Slider numUnitsSelectedSlider;
+    private TextField numUnitsSelectedTextField;
     @FXML
     private Button sellButton;
     @FXML
     private Button plantButton;
 
     private Player player;
-
+    private Field field;
     private Vegetative currentVegetativeType;
 
     // При открытии склада открывается страница семян
@@ -86,10 +86,12 @@ public class StorageWindowController {
 
                     currentVegetativeType = newValue;
 
-                    numUnitsSelectedSlider.setDisable(false);
+                    numUnitsSelectedTextField.setDisable(false);
                     sellButton.setDisable(false);
                     plantButton.setDisable(false);
-                    numUnitsSelectedSlider.adjustValue(0);
+                    numUnitsSelectedTextField.setText("");
+                    totalProfitLabel.setText("0");
+                    numUnitsSelectedLabel.setText("0");
                     numUnitsSelected = 0;
                 });
 
@@ -108,10 +110,12 @@ public class StorageWindowController {
 
                     currentVegetativeType = newValue;
 
-                    numUnitsSelectedSlider.setDisable(false);
+                    numUnitsSelectedTextField.setDisable(false);
                     sellButton.setDisable(false);
                     plantButton.setDisable(true);
-                    numUnitsSelectedSlider.adjustValue(0);
+                    numUnitsSelectedTextField.setText("");
+                    totalProfitLabel.setText("0");
+                    numUnitsSelectedLabel.setText("0");
                     numUnitsSelected = 0;
                 });
     }
@@ -125,7 +129,7 @@ public class StorageWindowController {
                 e.printStackTrace();
             }
         } else {
-            currentSeedNameLabel.setText("Ничего не выбрано");
+            currentSeedNameLabel.setText("Ничего не выбрано...");
             currentImage.setImage(null);
             totalProfitLabel.setText("0");
             numUnitsSelectedLabel.setText("0");
@@ -135,10 +139,19 @@ public class StorageWindowController {
     /** Показывает кол-во выбранных позиций и общую стоимость продажи */
     @FXML
     private void showNumUnitsSelected() {
-        numUnitsSelected = (int) numUnitsSelectedSlider.getValue();
-        int totalProfit = currentVegetativeType.getSalePrice() * numUnitsSelected;
+        try {
+            numUnitsSelected = Integer.parseInt(numUnitsSelectedTextField.getText());
+            if (numUnitsSelected < 0) throw new NumberFormatException();
+        } catch (NumberFormatException e) {
+            numUnitsSelected = 0;
+            numUnitsSelectedTextField.setText("");
+            numUnitsSelectedLabel.setText("0");
+            totalProfitLabel.setText("0");
+            return;
+        }
+        int totalCost = currentVegetativeType.getSalePrice() * numUnitsSelected;
         numUnitsSelectedLabel.setText(String.valueOf(numUnitsSelected));
-        totalProfitLabel.setText(String.valueOf(totalProfit));
+        totalProfitLabel.setText(String.valueOf(totalCost));
     }
 
     /** Продажа: Уменьшение количества данной позиции на складе и увеличение баланса */
@@ -149,13 +162,13 @@ public class StorageWindowController {
             //alert.initOwner(mainApp.getPrimaryStage());
             alert.setTitle("Предупреждение");
             if (numUnitsSelected == 0) {
-                alert.setHeaderText("Нельзя продать 0 шт.");
-                alert.setContentText("Пожалуйста, выберите, сколько шт. желаете продать");
+                alert.setHeaderText("Вы пытаетесь продать 0 штук.");
+                alert.setContentText("Пожалуйста, выберете, сколько штук желаете продать.");
             } else {
                 alert.setHeaderText(
-                        "Нельзя продать " + numUnitsSelected
-                                + " шт. Доступно лишь " + currentVegetativeType.getCount());
-                alert.setContentText("Пожалуйста, выберите доступное количество.");
+                        "Вы не можете продать " + numUnitsSelected
+                                + " штук. Доступно лишь: " + currentVegetativeType.getCount());
+                alert.setContentText("Пожалуйста, выберете доступное количество товара.");
             }
 
             alert.showAndWait();
@@ -169,8 +182,8 @@ public class StorageWindowController {
                 disableMainElements();
             }
 
-            //Установка слайдера и лейблов в стандартное положение
-            numUnitsSelectedSlider.adjustValue(0);
+            //Установка поля ввода и лейблов в стандартное положение
+            numUnitsSelectedTextField.setText("");
             numUnitsSelected = 0;
             numUnitsSelectedLabel.setText("0");
             totalProfitLabel.setText("0");
@@ -208,11 +221,11 @@ public class StorageWindowController {
 
     private void sell() {
         player.addBalance(numUnitsSelected * currentVegetativeType.getSalePrice());
-        player.deleteVegetable(currentVegetativeType, numUnitsSelected);
+        field.deleteVegetable(currentVegetativeType, numUnitsSelected);
     }
 
     private void disableMainElements() {
-        numUnitsSelectedSlider.setDisable(true);
+        numUnitsSelectedTextField.setDisable(true);
         sellButton.setDisable(true);
         plantButton.setDisable(true);
     }
@@ -224,12 +237,11 @@ public class StorageWindowController {
     public void setMainApp(Main MainApp) {
         this.mainApp = MainApp;
         player = mainApp.getPlayer();
+        field = mainApp.getField();
         storageSeedsTable.setItems(mainApp.getStorageSeeds());
         storagePlantsTable.setItems(mainApp.getStoragePlants());
         balanceLabel.setText(Integer.toString(player.getBalance()));
     }
 
     public void setStoreStage(Stage storageStage) { this.storeStage = storageStage; }
-
-
 }

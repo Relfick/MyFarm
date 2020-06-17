@@ -12,6 +12,7 @@ javafx {
 mainClassName = 'org.polytech.Main'
 group 'org.polytech'
 version '1.0-SNAPSHOT'
+compileJava.options.encoding = 'UTF-8'
 
 sourceCompatibility = 1.8
 

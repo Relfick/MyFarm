@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.polytech.Main;
+import org.polytech.model.Field;
 import org.polytech.model.Player;
 import org.polytech.model.SeedType;
 
@@ -15,6 +16,7 @@ import java.io.FileNotFoundException;
 public class ShopWindowController {
     private Main mainApp;
     private Player player;
+    private Field field;
 
     private SeedType currentSeedType;
     private int numUnitsSelected = 0;
@@ -43,9 +45,9 @@ public class ShopWindowController {
     @FXML
     private Label totalCostLabel;
     @FXML
-    private Slider numUnitsSelectedSlider;
-    @FXML
     private Button purchaseButton;
+    @FXML
+    private TextField numUnitsSelectedTextField;
 
     public ShopWindowController() {
 
@@ -71,10 +73,12 @@ public class ShopWindowController {
 
                     currentSeedType = newValue;
 
-                    numUnitsSelectedSlider.setDisable(false);
+                    numUnitsSelectedTextField.setDisable(false);
                     purchaseButton.setDisable(false);
-                    numUnitsSelectedSlider.adjustValue(0);
+                    numUnitsSelectedTextField.setText("");
                     numUnitsSelected = 0;
+                    totalCostLabel.setText("0");
+                    numUnitsSelectedLabel.setText("0");
                 });
 
 
@@ -83,7 +87,16 @@ public class ShopWindowController {
     /** Показывает кол-во выбранных позиций и общую стоимость покупки */
     @FXML
     private void showNumUnitsSelected() {
-        numUnitsSelected = (int) numUnitsSelectedSlider.getValue();
+        try {
+            numUnitsSelected = Integer.parseInt(numUnitsSelectedTextField.getText());
+            if (numUnitsSelected < 0) throw new NumberFormatException();
+        } catch (NumberFormatException e) {
+            numUnitsSelected = 0;
+            numUnitsSelectedTextField.setText("");
+            numUnitsSelectedLabel.setText("0");
+            totalCostLabel.setText("0");
+            return;
+        }
         int totalCost = currentSeedType.getPurchasePrice() * numUnitsSelected;
         numUnitsSelectedLabel.setText(String.valueOf(numUnitsSelected));
         totalCostLabel.setText(String.valueOf(totalCost));
@@ -98,11 +111,11 @@ public class ShopWindowController {
             //alert.initOwner(mainApp.getPrimaryStage());
             alert.setTitle("Предупреждение");
             if (numUnitsSelected == 0) {
-                alert.setHeaderText("Нельзя купить 0 шт.");
-                alert.setContentText("Пожалуйста, выберите, сколько шт. желаете купить");
+                alert.setHeaderText("Вы пытаетесь купить 0 шт.");
+                alert.setContentText("Пожалуйста, выберете, сколько штук вы желаете купить..");
             } else {
-                alert.setHeaderText("Недостаточно средств.");
-                alert.setContentText("Пожалуйста, выберите доступное количество позиций.");
+                alert.setHeaderText("Недостаточно средств. ");
+                alert.setContentText("Пожалуйста, выберите доступное количество товара.");
             }
 
             alert.showAndWait();
@@ -110,8 +123,8 @@ public class ShopWindowController {
             buy();
             balanceLabel.setText(String.valueOf(player.getBalance()));
 
-            //Установка слайдера и лейблов в стандартное положение
-            numUnitsSelectedSlider.adjustValue(0);
+            //Установка поля ввода и лейблов в стандартное положение
+            numUnitsSelectedTextField.setText("");
             numUnitsSelected = 0;
             numUnitsSelectedLabel.setText("0");
             totalCostLabel.setText("0");
@@ -120,14 +133,13 @@ public class ShopWindowController {
 
     private void buy() {
         player.reduceBalance(numUnitsSelected * currentSeedType.getPurchasePrice());
-        player.addVegetable(currentSeedType, numUnitsSelected);
+        field.addVegetable(currentSeedType, numUnitsSelected);
     }
 
     private void showSeedsDetails(SeedType seedType) {
         if (seedType != null) {
             currentSeedNameLabel.setText(seedType.getName());
             try {
-                System.out.println(seedType);
                 currentImage.setImage(new Image(new FileInputStream(seedType.getAdditionalImagePath())));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -143,6 +155,7 @@ public class ShopWindowController {
     public void setMainApp(Main MainApp) {
         this.mainApp = MainApp;
         player = mainApp.getPlayer();
+        field = mainApp.getField();
         shopSeedsTable.setItems(mainApp.getAllAvailableSeeds());
         balanceLabel.setText(Integer.toString(player.getBalance()));
     }

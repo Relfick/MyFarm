@@ -2,14 +2,14 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.polytech.controller.ShopWindowController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.polytech.controller.ShopWindowController">
     <children>
         <TableView fx:id="shopSeedsTable" layoutX="14.0" layoutY="14.0" prefHeight="490.0" prefWidth="388.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
             <columns>
@@ -21,7 +21,6 @@
         </TableView>
         <Label layoutX="407.0" layoutY="14.0" text="Баланс:" />
         <Label fx:id="balanceLabel" layoutX="460.0" layoutY="14.0" prefHeight="17.0" prefWidth="51.0" text="Label" />
-        <Slider fx:id="numUnitsSelectedSlider" blockIncrement="1.0" disable="true" layoutX="431.0" layoutY="298.0" majorTickUnit="5.0" max="30.0" minorTickCount="4" onKeyReleased="#showNumUnitsSelected" onMouseReleased="#showNumUnitsSelected" prefHeight="52.0" prefWidth="235.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
         <Button fx:id="purchaseButton" disable="true" layoutX="442.0" layoutY="424.0" mnemonicParsing="false" onAction="#handlePurchase" prefHeight="52.0" prefWidth="235.0" text="Купить" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
         <Label fx:id="numUnitsSelectedLabel" layoutX="414.0" layoutY="372.0" prefHeight="17.0" prefWidth="25.0" text="0" />
         <Label layoutX="458.0" layoutY="372.0" text="шт." />
@@ -30,5 +29,7 @@
         <Label fx:id="currentSeedNameLabel" layoutX="490.0" layoutY="78.0" text="Ничего не выбрано..." />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fff7f3" height="130.0" layoutX="458.0" layoutY="120.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" width="169.0" />
         <ImageView fx:id="currentImage" fitHeight="121.0" fitWidth="160.0" layoutX="463.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true" />
+      <TextField fx:id="numUnitsSelectedTextField" disable="true" layoutX="458.0" layoutY="330.0" onAction="#showNumUnitsSelected" prefHeight="31.0" prefWidth="169.0" />
+      <Label layoutX="426.0" layoutY="298.0" prefHeight="17.0" prefWidth="235.0" text="Для подтверждения ввода нажмите Enter" />
     </children>
 </AnchorPane>
