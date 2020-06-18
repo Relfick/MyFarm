@@ -1,5 +1,7 @@
 package org.polytech.controller;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -58,13 +60,13 @@ public class ShopWindowController {
 
         /* Заполняем таблицу семян */
         seedsNameColumn.setCellValueFactory(
-                cellData -> cellData.getValue().nameProperty());
+                cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         seedsGrowTimeColumn.setCellValueFactory(
-                cellData -> cellData.getValue().growTimeProperty());
+                cellData -> new SimpleIntegerProperty(cellData.getValue().getGrowTime()));
         seedsSalePriceColumn.setCellValueFactory(
-                cellData -> cellData.getValue().salePriceProperty());
+                cellData -> new SimpleIntegerProperty(cellData.getValue().getSalePrice()));
         seedsPurchasePriceColumn.setCellValueFactory(
-                cellData -> cellData.getValue().purchasePriceProperty());
+                cellData -> new SimpleIntegerProperty(cellData.getValue().getPurchasePrice()));
 
         shopSeedsTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
@@ -80,8 +82,6 @@ public class ShopWindowController {
                     totalCostLabel.setText("0");
                     numUnitsSelectedLabel.setText("0");
                 });
-
-
     }
 
     /** Показывает кол-во выбранных позиций и общую стоимость покупки */

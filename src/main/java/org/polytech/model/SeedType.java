@@ -1,20 +1,16 @@
 package org.polytech.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 public enum SeedType implements Vegetative{
     WHEAT(100, 120, "Пшеница", 6),
     STRAWBERRY(200, 230, "Клубника", 10),
     APPLE(300, 350, "Яблоко", 16);
 
-    private final String name;
-    private final Integer salePrice;
-    private final Integer purchasePrice;
+    private String name;
+    private Integer salePrice;
+    private Integer purchasePrice;
     private Integer count;
-    private final Integer growTime;
+    private Integer growTime;
 
     SeedType(int purchasePrice, int salePrice, String name, int growTime) {
         this.name = name;
@@ -25,22 +21,11 @@ public enum SeedType implements Vegetative{
     }
 
 
-    public SeedType getSeedType() { return this; }
-
     @Override
     public String getName() { return this.name; }
 
-    public StringProperty nameProperty() {
-        StringProperty nameProp = new SimpleStringProperty(name);
-        return nameProp;
-    }
-
     @Override
     public int getSalePrice() { return this.salePrice; }
-
-    public IntegerProperty salePriceProperty() {
-        IntegerProperty salePriceProp = new SimpleIntegerProperty(salePrice);
-        return salePriceProp; }
 
     @Override
     public int getCount() { return this.count; }
@@ -48,18 +33,7 @@ public enum SeedType implements Vegetative{
     @Override
     public void setCount(int count) { this.count = count; }
 
-    public IntegerProperty countProperty() {
-        IntegerProperty countProp = new SimpleIntegerProperty(count);
-        return countProp;
-    }
-
     public int getPurchasePrice() { return this.purchasePrice; }
-
-    public IntegerProperty purchasePriceProperty() {
-        IntegerProperty purchasePriceProp = new SimpleIntegerProperty(purchasePrice);
-        return purchasePriceProp;
-    }
-
 
 
     /* Картинка для отображения выбранного семени на складе */
@@ -70,11 +44,6 @@ public enum SeedType implements Vegetative{
 
     public int getGrowTime() {
         return growTime;
-    }
-
-    public IntegerProperty growTimeProperty() {
-        IntegerProperty growTimeProp = new SimpleIntegerProperty(growTime);
-        return growTimeProp;
     }
 
 

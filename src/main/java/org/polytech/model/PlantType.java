@@ -20,34 +20,18 @@ public enum PlantType implements Vegetative {
         this.count = 0;
     }
 
-    public PlantType getPlantType() { return this; }
-
 
     @Override
     public String getName() { return this.name; }
 
-    public StringProperty nameProperty() {
-        StringProperty nameProp = new SimpleStringProperty(name);
-        return nameProp;
-    }
-
     @Override
     public int getSalePrice() { return this.salePrice; }
-
-    public IntegerProperty salePriceProperty() {
-        IntegerProperty salePriceProp = new SimpleIntegerProperty(salePrice);
-        return salePriceProp; }
 
     @Override
     public int getCount() { return this.count; }
 
     @Override
     public void setCount(int count) { this.count = count; }
-
-    public IntegerProperty countProperty() {
-        IntegerProperty countProp = new SimpleIntegerProperty(count);
-        return countProp;
-    }
 
     @Override
     public String getAdditionalImagePath() {

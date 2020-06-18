@@ -1,5 +1,7 @@
 package org.polytech.controller;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -73,51 +75,39 @@ public class StorageWindowController {
 
         /* Заполняем таблицу семян */
         seedsNameColumn.setCellValueFactory(
-                cellData -> cellData.getValue().nameProperty());
+                cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         seedsNumberColumn.setCellValueFactory(
-                cellData -> cellData.getValue().countProperty());
+                cellData -> new SimpleIntegerProperty(cellData.getValue().getCount()));
         seedsSalePriceColumn.setCellValueFactory(
-                cellData -> cellData.getValue().salePriceProperty());
+                cellData -> new SimpleIntegerProperty(cellData.getValue().getSalePrice()));
 
         storageSeedsTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-
-                    showVegetativeDetails(newValue);
-
-                    currentVegetativeType = newValue;
-
-                    numUnitsSelectedTextField.setDisable(false);
-                    sellButton.setDisable(false);
-                    plantButton.setDisable(false);
-                    numUnitsSelectedTextField.setText("");
-                    totalProfitLabel.setText("0");
-                    numUnitsSelectedLabel.setText("0");
-                    numUnitsSelected = 0;
-                });
+                (observable, oldValue, newValue) -> updateVegetableInfo(newValue));
 
         /* Заполняем таблицу выросших растений */
         plantsNameColumn.setCellValueFactory(
-                cellData -> cellData.getValue().nameProperty());
+                cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         plantsNumberColumn.setCellValueFactory(
-                cellData -> cellData.getValue().countProperty());
+                cellData -> new SimpleIntegerProperty(cellData.getValue().getCount()));
         plantsSalePriceColumn.setCellValueFactory(
-                cellData -> cellData.getValue().salePriceProperty());
+                cellData -> new SimpleIntegerProperty(cellData.getValue().getSalePrice()));
 
         storagePlantsTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
+                (observable, oldValue, newValue) -> updateVegetableInfo(newValue));
+    }
 
-                    showVegetativeDetails(newValue);
+    private void updateVegetableInfo(Vegetative newValue) {
+        showVegetativeDetails(newValue);
 
-                    currentVegetativeType = newValue;
+        currentVegetativeType = newValue;
 
-                    numUnitsSelectedTextField.setDisable(false);
-                    sellButton.setDisable(false);
-                    plantButton.setDisable(true);
-                    numUnitsSelectedTextField.setText("");
-                    totalProfitLabel.setText("0");
-                    numUnitsSelectedLabel.setText("0");
-                    numUnitsSelected = 0;
-                });
+        numUnitsSelectedTextField.setDisable(false);
+        sellButton.setDisable(false);
+        plantButton.setDisable(false);
+        numUnitsSelectedTextField.setText("");
+        totalProfitLabel.setText("0");
+        numUnitsSelectedLabel.setText("0");
+        numUnitsSelected = 0;
     }
 
     private void showVegetativeDetails(Vegetative vegetative) {
@@ -174,6 +164,8 @@ public class StorageWindowController {
             alert.showAndWait();
         } else {
             sell();
+            storageSeedsTable.refresh();
+            storagePlantsTable.refresh();
             balanceLabel.setText(String.valueOf(player.getBalance()));
 
             // Очистка всей доп информации в случае, когда склад становится пустым

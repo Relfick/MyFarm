@@ -59,6 +59,6 @@
             </tabs>
         </TabPane>
       <TextField fx:id="numUnitsSelectedTextField" layoutX="334.0" layoutY="346.0" onAction="#showNumUnitsSelected" prefHeight="25.0" prefWidth="259.0" />
-      <Label layoutX="313.0" layoutY="308.0" prefHeight="25.0" prefWidth="321.0" text="Введите количество. Для подтверждениянажмите Enter." />
+      <Label layoutX="313.0" layoutY="308.0" prefHeight="25.0" prefWidth="321.0" text="Введите количество. Для подтверждения нажмите Enter." />
     </children>
 </AnchorPane>
