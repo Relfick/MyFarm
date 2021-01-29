@@ -82,7 +82,6 @@ public class Main extends Application {
             storageStage.showAndWait();
 
             return controller.isPlantClicked();
-
         } catch (IOException e) {
             e.printStackTrace();
             return false;

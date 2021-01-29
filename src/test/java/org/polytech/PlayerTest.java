@@ -3,6 +3,7 @@ package org.polytech;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 
+import org.polytech.model.Field;
 import org.polytech.model.Player;
 import org.polytech.model.SeedType;
 
@@ -10,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
     private Player player = new Player(300);
+    private Field field = new Field();
 
     @Test
     void changeBalance() {
@@ -21,14 +23,14 @@ class PlayerTest {
 
     @Test
     void changeVegetables() {
-        player.addVegetable(SeedType.APPLE, 3);
-        player.addVegetable(SeedType.WHEAT, 2);
-        assertEquals(player.getCountOfSeed(SeedType.APPLE), 3);
-        assertEquals(player.getCountOfSeed(SeedType.WHEAT), 2);
-        player.deleteVegetable(SeedType.APPLE, 1);
-        player.deleteVegetable(SeedType.WHEAT, 1);
-        assertEquals(player.getCountOfSeed(SeedType.APPLE), 2);
-        assertEquals(player.getCountOfSeed(SeedType.WHEAT), 1);
+        field.addVegetable(SeedType.APPLE, 3);
+        field.addVegetable(SeedType.WHEAT, 2);
+        assertEquals(field.getCountOfSeed(SeedType.APPLE), 3);
+        assertEquals(field.getCountOfSeed(SeedType.WHEAT), 2);
+        field.deleteVegetable(SeedType.APPLE, 1);
+        field.deleteVegetable(SeedType.WHEAT, 1);
+        assertEquals(field.getCountOfSeed(SeedType.APPLE), 2);
+        assertEquals(field.getCountOfSeed(SeedType.WHEAT), 1);
     }
 
     @Test
@@ -36,22 +38,22 @@ class PlayerTest {
         Pair<Integer, Integer> wheatCoords = new Pair<>(2, 1);
         Pair<Integer, Integer> strawberryCoords = new Pair<>(0, 0);
 
-        player.addVegetable(SeedType.STRAWBERRY, 1);
-        player.addVegetable(SeedType.WHEAT, 1);
+        field.addVegetable(SeedType.STRAWBERRY, 1);
+        field.addVegetable(SeedType.WHEAT, 1);
 
-        player.plantSeed(strawberryCoords, SeedType.STRAWBERRY);
-        assertTrue(player.isAlreadyPlanted(strawberryCoords));
+        field.plantSeed(strawberryCoords, SeedType.STRAWBERRY);
+        assertTrue(field.isAlreadyPlanted(strawberryCoords));
 
-        assertFalse(player.isAlreadyPlanted(wheatCoords));
-        player.plantSeed(wheatCoords, SeedType.WHEAT);
+        assertFalse(field.isAlreadyPlanted(wheatCoords));
+        field.plantSeed(wheatCoords, SeedType.WHEAT);
 
-        assertEquals(SeedType.STRAWBERRY, player.getHarvest(strawberryCoords));
-        assertEquals(SeedType.WHEAT, player.getHarvest(wheatCoords));
+        assertEquals(SeedType.STRAWBERRY, field.getHarvest(strawberryCoords));
+        assertEquals(SeedType.WHEAT, field.getHarvest(wheatCoords));
 
-        player.setGrown(strawberryCoords);
+        field.setGrown(strawberryCoords);
 
-        assertEquals(true, player.hasGrown(strawberryCoords));
-        assertEquals(false, player.hasGrown(wheatCoords));
+        assertEquals(true, field.hasGrown(strawberryCoords));
+        assertEquals(false, field.hasGrown(wheatCoords));
     }
 
 
